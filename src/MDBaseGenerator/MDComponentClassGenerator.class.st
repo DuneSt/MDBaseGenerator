@@ -47,6 +47,6 @@ MDComponentClassGenerator >> packageTag [
 ]
 
 { #category : #accessing }
-MDComponentClassGenerator >> superclass [
-	^ WAComponent
+MDComponentClassGenerator >> superclassName [
+	^ #WAComponent
 ]

@@ -6,14 +6,22 @@ Class {
 		'methods',
 		'classMethods'
 	],
+	#classInstVars : [
+		'instance'
+	],
 	#category : #MDBaseGenerator
 }
 
 { #category : #accessing }
 MDClassGenerator class >> generator: aMDBaseGenerator [
-	^ self new
+	^ instance := self new
 		generator: aMDBaseGenerator;
 		yourself
+]
+
+{ #category : #accessing }
+MDClassGenerator class >> instance [
+	^ instance ifNil: [ self error: 'This class generator was not initialized.' ]
 ]
 
 { #category : #accessing }
@@ -49,6 +57,10 @@ MDClassGenerator >> comment [
 { #category : #translating }
 MDClassGenerator >> generate [
 	| generatedClass |
+	self
+		initializeMethods;
+		initializeClassMethods.
+
 	generatedClass := self superclass
 		subclass: self className
 		slots: self variables
@@ -76,10 +88,7 @@ MDClassGenerator >> generator: anObject [
 MDClassGenerator >> initialize [
 	super initialize.
 	methods := Dictionary new.
-	classMethods := Dictionary new.
-	self
-		initializeMethods;
-		initializeClassMethods
+	classMethods := Dictionary new
 ]
 
 { #category : #initialization }
@@ -119,6 +128,11 @@ MDClassGenerator >> packageTag [
 
 { #category : #accessing }
 MDClassGenerator >> superclass [
+	^ self class environment at: self superclassName asSymbol
+]
+
+{ #category : #accessing }
+MDClassGenerator >> superclassName [
 	^ self subclassResponsibility
 ]
 
