@@ -14,7 +14,7 @@ Class {
 
 { #category : #accessing }
 MDBaseGenerator >> classGenerators [
-	^ { MDComponentClassGenerator. MDRootClassGenerator }
+	^ {MDComponentClassGenerator . MDSessionClassGenerator . MDRootClassGenerator}
 ]
 
 { #category : #preprocessing }

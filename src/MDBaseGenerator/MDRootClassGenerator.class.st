@@ -42,17 +42,17 @@ MDRootClassGenerator >> initializeClassMethods [
 			'canBeRoot
 	^ true';
 		flag: #todo;
-		"Manage file library of the application and session"
+		"Manage file library of the application"
 			addClassMethodIn: 'initialization'
 			code:
 			('initialize
 		self environment at: #WADevelopmentConfiguration ifPresent: [ :class | WAAdmin applicationDefaults removeParent: class instance ]. "Remove development tools."
 	^ (WAAdmin register: self asApplicationAt: ''{1}'')
-		preferenceAt: #sessionClass put: MDLDemoSession;
+		preferenceAt: #sessionClass put: {2};
 		addLibrary: JQDeploymentLibrary;
 		addLibrary: MDLLibrary;
 		addLibrary: MDLDemoLibrary;
-		yourself' format: {self generator projectName});
+		yourself' format: {self generator projectName. MDSessionClassGenerator instance className});
 		addClassMethodIn: 'world menu'
 			code:
 			('menuCommandOn: aBuilder
