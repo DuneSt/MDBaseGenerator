@@ -4,8 +4,7 @@ Class {
 	#instVars : [
 		'prefix',
 		'packageName',
-		'projectName',
-		'currentClass'
+		'projectName'
 	],
 	#category : #MDBaseGenerator
 }
@@ -26,6 +25,7 @@ MDBaseGenerator >> generate [
 	self cleanBeforeGeneration.
 	RPackageOrganizer default createPackageNamed: self packageName.
 	self classGenerators do: [ :class | (class generator: self) generate ].
+	self openPackage.
 	self openLastInstructions
 ]
 
@@ -35,6 +35,11 @@ MDBaseGenerator >> openLastInstructions [
 	(String streamContents: [ :s | s << 'Application generated with success.
 Now you can implement the missing parts to get your application!
 	1) TODO']) logCr
+]
+
+{ #category : #postprocessing }
+MDBaseGenerator >> openPackage [
+	(RPackageOrganizer default packageNamed: self packageName) browse 
 ]
 
 { #category : #accessing }

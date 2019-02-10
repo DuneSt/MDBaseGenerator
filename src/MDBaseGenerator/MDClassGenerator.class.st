@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'generator',
-		'generatedClass'
+		'methods',
+		'classMethods'
 	],
 	#category : #MDBaseGenerator
 }
@@ -13,6 +14,26 @@ MDClassGenerator class >> generator: aMDBaseGenerator [
 	^ self new
 		generator: aMDBaseGenerator;
 		yourself
+]
+
+{ #category : #accessing }
+MDClassGenerator >> addClassMethodIn: aProtocol code: aString [
+	(self classMethods at: aProtocol ifAbsentPut: [ OrderedCollection new ]) add: aString
+]
+
+{ #category : #accessing }
+MDClassGenerator >> addMethodIn: aProtocol code: aString [
+	(self methods at: aProtocol ifAbsentPut: [ OrderedCollection new ]) add: aString
+]
+
+{ #category : #accessing }
+MDClassGenerator >> classMethods [
+	^ classMethods
+]
+
+{ #category : #accessing }
+MDClassGenerator >> classMethods: anObject [
+	classMethods := anObject
 ]
 
 { #category : #accessing }
@@ -27,13 +48,18 @@ MDClassGenerator >> comment [
 
 { #category : #translating }
 MDClassGenerator >> generate [
+	| generatedClass |
 	generatedClass := self superclass
 		subclass: self className
 		slots: self variables
 		classVariables: {}
 		package: self packageName.
-		
-	generatedClass comment: self comment
+
+	generatedClass comment: self comment.
+
+	self methods keysAndValuesDo: [ :protocol :meths | meths do: [ :method | generatedClass compile: method classified: protocol ] ].
+
+	self classMethods keysAndValuesDo: [ :protocol :meths | meths do: [ :method | generatedClass class compile: method classified: protocol ] ]
 ]
 
 { #category : #accessing }
@@ -44,6 +70,36 @@ MDClassGenerator >> generator [
 { #category : #accessing }
 MDClassGenerator >> generator: anObject [
 	generator := anObject
+]
+
+{ #category : #initialization }
+MDClassGenerator >> initialize [
+	super initialize.
+	methods := Dictionary new.
+	classMethods := Dictionary new.
+	self
+		initializeMethods;
+		initializeClassMethods
+]
+
+{ #category : #initialization }
+MDClassGenerator >> initializeClassMethods [
+	"Nothing by default"
+]
+
+{ #category : #initialization }
+MDClassGenerator >> initializeMethods [
+	"Nothing by default"
+]
+
+{ #category : #accessing }
+MDClassGenerator >> methods [
+	^ methods
+]
+
+{ #category : #accessing }
+MDClassGenerator >> methods: anObject [
+	methods := anObject
 ]
 
 { #category : #accessing }
