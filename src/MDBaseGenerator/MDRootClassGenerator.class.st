@@ -11,26 +11,16 @@ MDRootClassGenerator >> comment [
 
 I am the root component of {1}. I will contain every components of the application to display.
 
-I have a header{2}.
+I have a header.
  
 Internal Representation and Key Implementation Points.
 --------------------
 
     Instance Variables
 	componentInstances:			<aDictionary>	A dictionary keeping for each component class, an instance. This instance can be use when the user change of page to come pack to a previous page.
-	componentToDisplay:		<aComponent>	The current page to display as the root content.{3}
+	componentToDisplay:		<aComponent>	The current page to display as the root content.
 	header:						<aComponent>	The header of the page.
-'
-		format:
-			{self generator projectName . (self hasFooter ifTrue: [ ' and a footer' ] ifFalse: [ '' ]) . (self hasFooter
-				ifTrue: [ '
-	footer:						<aComponent>	The footer of the page.' ]
-				ifFalse: [ '' ])}
-]
-
-{ #category : #testing }
-MDRootClassGenerator >> hasFooter [
-	^ self generator withFooter
+' format: {self generator projectName}
 ]
 
 { #category : #initialization }
@@ -154,60 +144,27 @@ MDRootClassGenerator >> initializeMethods [
 			'updateUrl: aUrl
 	super updateUrl: aUrl.
 	aUrl addToPath: (self componentToDisplay pathName)'.
+	self initializeMethodsRelatedToFooter
+]
 
-	self hasFooter
-		ifTrue: [ self
-				addMethodIn: 'accessing'
-					code:
-					'footer
-	^ footer';
-				addMethodIn: 'accessing'
-					code:
-					'footer: aComponent
-	footer := aComponent';
-				addMethodIn: 'hooks'
-					code:
-					'children
-	^ { self header. self componentToDisplay. self footer }';
-				addMethodIn: 'initialization'
-					code:
-					'initialize
-	super initialize.
-	self header: self defaultHeader.
-	self footer: self defaultFooter.
-	self session rootComponent: self.
-	self componentInstances: Dictionary new.
-	self displayInstanceOf: self header possiblePages first';
-				addMethodIn: 'rendering'
-					code:
-					('renderContentOn: html
-	html
-		mdlLayout: [ html render: self header.
-			html mdlLayoutContent
-				class: ''mdl-color-text--grey-600'';
-				with: [ html mdlGrid
-						noSpacing;
-						with: [ html mdlCell
-								class: ''{1}'';
-								size: 12;
-								with: [ html render: self componentToDisplay ] ].
-					html render: self footer ] ]' format: {self generator rootHtmlClass}) ]
-		ifFalse: [ self
-				addMethodIn: 'hooks'
-					code:
-					'children
+{ #category : #initialization }
+MDRootClassGenerator >> initializeMethodsRelatedToFooter [
+	self
+		addMethodIn: 'hooks'
+			code:
+			'children
 	^ { self header. self componentToDisplay }';
-				addMethodIn: 'initialization'
-					code:
-					'initialize
+		addMethodIn: 'initialization'
+			code:
+			'initialize
 	super initialize.
 	self header: self defaultHeader.
 	self session rootComponent: self.
 	self componentInstances: Dictionary new.
 	self displayInstanceOf: self header possiblePages first';
-				addMethodIn: 'rendering'
-					code:
-					('renderContentOn: html
+		addMethodIn: 'rendering'
+			code:
+			('renderContentOn: html
 	html
 		mdlLayout: [ html render: self header.
 			html mdlLayoutContent
@@ -217,7 +174,7 @@ MDRootClassGenerator >> initializeMethods [
 						with: [ html mdlCell
 								class: ''{1}'';
 								size: 12;
-								with: [ html render: self componentToDisplay ] ]] ]' format: {self generator rootHtmlClass}) ]
+								with: [ html render: self componentToDisplay ] ]] ]' format: {self generator rootHtmlClass})
 ]
 
 { #category : #accessing }
@@ -237,5 +194,5 @@ MDRootClassGenerator >> superclassName [
 
 { #category : #accessing }
 MDRootClassGenerator >> variables [
-	^ self hasFooter ifTrue: [ #(#header #footer #componentToDisplay #componentInstances) ] ifFalse: [ #(#header #componentToDisplay #componentInstances) ]
+	^ #(#header #componentToDisplay #componentInstances)
 ]

@@ -6,6 +6,7 @@ Class {
 		'packageName',
 		'projectName',
 		'withFooter',
+		'withDrawerHeader',
 		'rootHtmlClass',
 		'title'
 	],
@@ -14,7 +15,9 @@ Class {
 
 { #category : #accessing }
 MDBaseGenerator >> classGenerators [
-	^ {MDComponentClassGenerator . MDSessionClassGenerator . MDPageClassGenerator . MDHelloWorldClassGenerator . MDRootClassGenerator}
+	^ {MDComponentClassGenerator . MDSessionClassGenerator . MDPageClassGenerator . MDHelloWorldClassGenerator . (self withFooter
+		ifTrue: [ MDRootWithFooterClassGenerator ]
+		ifFalse: [ MDRootClassGenerator ])}
 ]
 
 { #category : #preprocessing }
@@ -130,9 +133,20 @@ MDBaseGenerator >> validateInformations [
 	self packageName ifNil: [ self error: 'Generator needs a package name where to generate the code.' ].
 	self projectName ifNil: [ self error: 'Generator needs a project name.' ].
 	self withFooter ifNil: [ self error: 'Generator needs to know if you want your pages to get a footer or not.' ].
+	self withDrawerHeader ifNil: [ self error: 'Generator needs to know if you want your header with a drawer or not.' ].
 	self rootHtmlClass ifNil: [ self error: 'Generator needs to have a root html class.' ].
 	self title ifNil: [ self error: 'Generator needs to have a title to display in the tab of the browser.' ].
 	self class environment at: #MaterialDesignLite ifAbsent: [ self error: 'MDL need to be in the image for the generation.' ]
+]
+
+{ #category : #accessing }
+MDBaseGenerator >> withDrawerHeader [
+	^ withDrawerHeader
+]
+
+{ #category : #accessing }
+MDBaseGenerator >> withDrawerHeader: anObject [
+	withDrawerHeader := anObject
 ]
 
 { #category : #accessing }
