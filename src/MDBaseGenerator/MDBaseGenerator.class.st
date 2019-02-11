@@ -13,6 +13,19 @@ Class {
 	#category : #MDBaseGenerator
 }
 
+{ #category : #example }
+MDBaseGenerator class >> example [
+	self new
+		prefix: 'MDE';
+		packageName: 'MDExample-WebApplication';
+		projectName: 'MDExample';
+		withFooter: true;
+		withDrawerHeader: false;
+		rootHtmlClass: 'mdexample';
+		title: 'Application example for MDL.';
+		generate
+]
+
 { #category : #accessing }
 MDBaseGenerator >> classGenerators [
 	^ {MDComponentClassGenerator . MDSessionClassGenerator . MDPageClassGenerator . MDHelloWorldClassGenerator . (self withFooter
