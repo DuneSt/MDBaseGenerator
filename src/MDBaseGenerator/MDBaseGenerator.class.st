@@ -14,7 +14,7 @@ Class {
 
 { #category : #accessing }
 MDBaseGenerator >> classGenerators [
-	^ {MDComponentClassGenerator . MDSessionClassGenerator . MDRootClassGenerator}
+	^ {MDComponentClassGenerator . MDSessionClassGenerator . MDPageClassGenerator . MDHelloWorldClassGenerator . MDRootClassGenerator}
 ]
 
 { #category : #preprocessing }
@@ -57,7 +57,11 @@ Now you can implement the missing parts to get your application!
 				<< MDRootClassGenerator instance className;
 				<<
 					'>>updateRoot: should be updated to match your application color selection (See MDL for Seaside getting started section) or better, the color part should be removed after you move the code to your own file library.
-	3) TODO' ]) logCr
+	3) Replace  ';
+				<< MDHelloWorldClassGenerator instance className;
+				<<
+					' by your first page.
+	4)' ]) logCr
 ]
 
 { #category : #postprocessing }
