@@ -41,8 +41,6 @@ MDRootClassGenerator >> initializeClassMethods [
 			code:
 			'canBeRoot
 	^ true';
-		flag: #todo;
-		"Manage file library of the application"
 			addClassMethodIn: 'initialization'
 			code:
 			('initialize
@@ -51,7 +49,6 @@ MDRootClassGenerator >> initializeClassMethods [
 		preferenceAt: #sessionClass put: {2};
 		addLibrary: JQDeploymentLibrary;
 		addLibrary: MDLLibrary;
-		addLibrary: MDLDemoLibrary;
 		yourself' format: {self generator projectName. MDSessionClassGenerator instance className});
 		addClassMethodIn: 'world menu'
 			code:
