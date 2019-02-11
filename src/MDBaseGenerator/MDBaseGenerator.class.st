@@ -28,7 +28,7 @@ MDBaseGenerator class >> example [
 
 { #category : #accessing }
 MDBaseGenerator >> classGenerators [
-	^ {MDComponentClassGenerator . MDSessionClassGenerator . MDPageClassGenerator . MDHelloWorldClassGenerator . (self withFooter
+	^ {MDComponentClassGenerator . MDSessionClassGenerator . MDPageClassGenerator . MDHelloWorldClassGenerator . self headerClassGenerator . (self withFooter
 		ifTrue: [ MDRootWithFooterClassGenerator ]
 		ifFalse: [ MDRootClassGenerator ])}
 ]
@@ -47,6 +47,11 @@ MDBaseGenerator >> generate [
 	self openPackage.
 	self openLastInstructions.
 	self initializeClasses
+]
+
+{ #category : #accessing }
+MDBaseGenerator >> headerClassGenerator [
+	^ self withDrawerHeader ifTrue: [ MDDrawerHeaderClassGenerator ] ifFalse: [ MDTabBarHeaderClassGenerator ]
 ]
 
 { #category : #postprocessing }

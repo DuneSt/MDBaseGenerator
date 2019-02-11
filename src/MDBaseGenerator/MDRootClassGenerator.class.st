@@ -68,7 +68,7 @@ MDRootClassGenerator >> initializeClassMethods [
 
 { #category : #initialization }
 MDRootClassGenerator >> initializeMethods [
-	self flag: #todo.	"Add dehault header and footer methods."
+	self flag: #todo.	"Add dehault footer method."
 	super initializeMethods.
 	self
 		addMethodIn: 'accessing'
@@ -99,6 +99,10 @@ MDRootClassGenerator >> initializeMethods [
 			code:
 			'header: aComponent
 	header := aComponent';
+		addMethodIn: 'components'
+			code:
+			('defaultHeader
+	^ {1} new' format: {self generator headerClassGenerator instance className});
 		addMethodIn: 'hooks'
 			code:
 			'initialRequest: aRequest
