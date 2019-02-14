@@ -8,7 +8,9 @@ Class {
 		'withFooter',
 		'withDrawerHeader',
 		'rootHtmlClass',
-		'title'
+		'title',
+		'primaryColor',
+		'accentColor'
 	],
 	#category : #MDBaseGenerator
 }
@@ -23,19 +25,40 @@ MDBaseGenerator class >> example [
 		withDrawerHeader: false;
 		rootHtmlClass: 'mdexample';
 		title: 'Application example for MDL.';
+		primaryColor: MDLColor purple;
+		accentColor: MDLColor purple lighter;
 		generate
 ]
 
 { #category : #accessing }
+MDBaseGenerator >> accentColor [
+	^ accentColor
+]
+
+{ #category : #accessing }
+MDBaseGenerator >> accentColor: anObject [
+	accentColor := anObject
+]
+
+{ #category : #accessing }
 MDBaseGenerator >> classGenerators [
-	^ {MDComponentClassGenerator . MDSessionClassGenerator . MDPageClassGenerator . MDHelloWorldClassGenerator . self headerClassGenerator . (self withFooter
-		ifTrue: [ MDRootWithFooterClassGenerator ]
-		ifFalse: [ MDRootClassGenerator ])}
+	^ {MDComponentClassGenerator.
+	MDFileLibraryClassGenerator.
+	MDSessionClassGenerator.
+	MDPageClassGenerator.
+	MDHelloWorldClassGenerator.
+	self headerClassGenerator.
+	self rootClassGenerator}
 ]
 
 { #category : #preprocessing }
 MDBaseGenerator >> cleanBeforeGeneration [
 	(RPackageOrganizer default packageNamed: self packageName ifAbsent: [ nil ]) ifNotNil: #removeFromSystem
+]
+
+{ #category : #accessing }
+MDBaseGenerator >> colors [
+	^ self primaryColor tint, '-', self accentColor tint
 ]
 
 { #category : #generation }
@@ -56,7 +79,7 @@ MDBaseGenerator >> headerClassGenerator [
 
 { #category : #postprocessing }
 MDBaseGenerator >> initializeClasses [
-	{MDRootClassGenerator} do: [ :class | self class environment at: class instance className asSymbol ifPresent: #initialize ]
+	{self rootClassGenerator} do: [ :class | self class environment at: class instance className asSymbol ifPresent: #initialize ]
 ]
 
 { #category : #postprocessing }
@@ -71,11 +94,11 @@ MDBaseGenerator >> openLastInstructions [
 				'Application generated with success.
 Now you can implement the missing parts to get your application!
 	1) ')
-				<< MDRootClassGenerator instance className;
+				<< self rootClassGenerator instance className;
 				<<
 					'>>style should be updated to match your application color selection (See MDL for Seaside getting started section) or better, should be removed after you move the code to your own CSS.
 	2) ';
-				<< MDRootClassGenerator instance className;
+				<< self rootClassGenerator instance className;
 				<<
 					'>>updateRoot: should be updated to match your application color selection (See MDL for Seaside getting started section) or better, the color part should be removed after you move the code to your own file library.
 	3) Replace  ';
@@ -116,6 +139,16 @@ MDBaseGenerator >> prefixed: aString [
 ]
 
 { #category : #accessing }
+MDBaseGenerator >> primaryColor [
+	^ primaryColor
+]
+
+{ #category : #accessing }
+MDBaseGenerator >> primaryColor: anObject [
+	primaryColor := anObject
+]
+
+{ #category : #accessing }
 MDBaseGenerator >> projectName [
 	^ projectName
 ]
@@ -123,6 +156,13 @@ MDBaseGenerator >> projectName [
 { #category : #accessing }
 MDBaseGenerator >> projectName: anObject [
 	projectName := anObject
+]
+
+{ #category : #accessing }
+MDBaseGenerator >> rootClassGenerator [
+	^ self withFooter
+		ifTrue: [ MDRootWithFooterClassGenerator ]
+		ifFalse: [ MDRootClassGenerator ]
 ]
 
 { #category : #accessing }
@@ -154,7 +194,9 @@ MDBaseGenerator >> validateInformations [
 	self withDrawerHeader ifNil: [ self error: 'Generator needs to know if you want your header with a drawer or not.' ].
 	self rootHtmlClass ifNil: [ self error: 'Generator needs to have a root html class.' ].
 	self title ifNil: [ self error: 'Generator needs to have a title to display in the tab of the browser.' ].
-	self class environment at: #MaterialDesignLite ifAbsent: [ self error: 'MDL need to be in the image for the generation.' ]
+	self class environment at: #MaterialDesignLite ifAbsent: [ self error: 'MDL need to be in the image for the generation.' ].
+	self primaryColor ifNil: [ self error: 'Generator needs a primary color set for MDL.' ].
+	self accentColor ifNil: [ self error: 'Generator needs a accent color set for MDL.' ].
 ]
 
 { #category : #accessing }

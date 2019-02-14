@@ -57,15 +57,15 @@ MDClassGenerator >> comment [
 { #category : #translating }
 MDClassGenerator >> generate [
 	| generatedClass |
-	self
-		initializeMethods;
-		initializeClassMethods.
-
 	generatedClass := self superclass
 		subclass: self className
 		slots: self variables
 		classVariables: {}
 		package: self packageName.
+		
+	self
+		initializeMethods;
+		initializeClassMethods.
 
 	generatedClass comment: self comment.
 
