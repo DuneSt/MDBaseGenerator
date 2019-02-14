@@ -39,7 +39,8 @@ MDRootClassGenerator >> initializeClassMethods [
 		preferenceAt: #sessionClass put: {2};
 		addLibrary: JQDeploymentLibrary;
 		addLibrary: MDLLibrary;
-		yourself' format: {self generator projectName. MDSessionClassGenerator instance className});
+		addLibrary: {3};
+		yourself' format: {self generator projectName. MDSessionClassGenerator instance className. MDFileLibraryClassGenerator instance className});
 		addClassMethodIn: 'world menu'
 			code:
 			('menuCommandOn: aBuilder
