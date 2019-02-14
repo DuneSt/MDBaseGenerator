@@ -25,6 +25,8 @@ MDBaseGenerator class >> example [
 		withDrawerHeader: false;
 		rootHtmlClass: 'mdexample';
 		title: 'Application example for MDL.';
+		primaryColor: MDLColor purple;
+		accentColor: MDLColor purple lighter;
 		generate
 ]
 
