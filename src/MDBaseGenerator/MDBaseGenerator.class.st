@@ -75,13 +75,33 @@ MDBaseGenerator >> cssInFileLibrary: anObject [
 
 { #category : #generation }
 MDBaseGenerator >> generate [
+	[ :job | 
+	job title: 'Generating application: Validate informations'.
 	self validateInformations.
+	job
+		progress: 0.1;
+		title: 'Generating application: Clean'.
 	self cleanBeforeGeneration.
+	job
+		progress: 0.2;
+		title: 'Generating application: Generate package'.
 	RPackageOrganizer default createPackageNamed: self packageName.
-	self classGenerators do: [ :class | (class generator: self) generate ].
+	job
+		progress: 0.4;
+		title: 'Generating application: Generate classes'.
+	self classGenerators do: [ :class | (class generator: self) generate ] displayingProgress: [ :class | 'Generation of ' , class printString ].
+	job
+		progress: 0.7;
+		title: 'Generating application: Open package'.
 	self openPackage.
+	job
+		progress: 0.8;
+		title: 'Generating application: Open transcript'.
 	self openLastInstructions.
-	self initializeClasses
+	job
+		progress: 1;
+		title: 'Generating application: Initialize classes'.
+	self initializeClasses ] asJob run
 ]
 
 { #category : #accessing }
