@@ -15,6 +15,7 @@ MDFileLibraryClassGenerator >> initializeMethods [
 
 	| library url fileName |
 	super initializeMethods.
+	self generator cssInFileLibrary ifFalse: [ ^ self ].
 	library := self class environment at: self className asSymbol.
 	fileName := 'material.' , self generator colors , '.min.css'.
 	url := 'https://storage.googleapis.com/code.getmdl.io/1.3.0/'

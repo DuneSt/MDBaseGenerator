@@ -142,8 +142,12 @@ MDRootClassGenerator >> initializeMethods [
 	anHtmlRoot title: ''{1}''.
 	anHtmlRoot meta
 		attributeAt: ''name'' put: ''viewport'';
-		content: ''width=device-width, initial-scale=1''.
-	anHtmlRoot stylesheet url: (WAUrl absolute: ''https://storage.googleapis.com/code.getmdl.io/1.3.0/material.deep_purple-pink.min.css'')' format: {self generator title});
+		content: ''width=device-width, initial-scale=1''{2}'
+				format:
+					{self generator title . (self generator cssInFileLibrary
+						ifTrue: [ '' ]
+						ifFalse: [ '.
+	anHtmlRoot stylesheet url: (WAUrl absolute: ''https://storage.googleapis.com/code.getmdl.io/1.3.0/material.', self generator colors , '.min.css'')' ])});
 		addMethodIn: 'updating'
 			code:
 			'updateUrl: aUrl

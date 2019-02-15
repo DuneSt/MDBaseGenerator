@@ -10,7 +10,8 @@ Class {
 		'rootHtmlClass',
 		'title',
 		'primaryColor',
-		'accentColor'
+		'accentColor',
+		'cssInFileLibrary'
 	],
 	#category : #MDBaseGenerator
 }
@@ -21,12 +22,13 @@ MDBaseGenerator class >> example [
 		prefix: 'MDE';
 		packageName: 'MDExample-WebApplication';
 		projectName: 'MDExample';
-		withFooter: true;
+		withFooter: false;
 		withDrawerHeader: false;
 		rootHtmlClass: 'mdexample';
 		title: 'Application example for MDL.';
-		primaryColor: MDLColor purple;
-		accentColor: MDLColor purple lighter;
+		primaryColor: MDLColor deepPurple;
+		accentColor: MDLColor pink;
+		cssInFileLibrary: false;
 		generate
 ]
 
@@ -59,6 +61,16 @@ MDBaseGenerator >> cleanBeforeGeneration [
 { #category : #accessing }
 MDBaseGenerator >> colors [
 	^ self primaryColor tint, '-', self accentColor tint
+]
+
+{ #category : #accessing }
+MDBaseGenerator >> cssInFileLibrary [
+	^ cssInFileLibrary
+]
+
+{ #category : #accessing }
+MDBaseGenerator >> cssInFileLibrary: anObject [
+	cssInFileLibrary := anObject
 ]
 
 { #category : #generation }
@@ -197,6 +209,7 @@ MDBaseGenerator >> validateInformations [
 	self class environment at: #MaterialDesignLite ifAbsent: [ self error: 'MDL need to be in the image for the generation.' ].
 	self primaryColor ifNil: [ self error: 'Generator needs a primary color set for MDL.' ].
 	self accentColor ifNil: [ self error: 'Generator needs a accent color set for MDL.' ].
+	self cssInFileLibrary ifNil: [ self error: 'Generator needs to know if the CSS should be stored in the file library or the referenced in the update root.' ]
 ]
 
 { #category : #accessing }
