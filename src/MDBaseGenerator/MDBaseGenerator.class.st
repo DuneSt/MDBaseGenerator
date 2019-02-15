@@ -34,6 +34,9 @@ MDBaseGenerator class >> example [
 
 { #category : #accessing }
 MDBaseGenerator >> accentColor [
+	"This color will be used as accent color (secondary/highlight color) of the MDL application. It should be an instance of MDLColor but cannot be brown, grey or blue grey. For example: `MDLColor pink`."
+
+	<generatorParameter>
 	^ accentColor
 ]
 
@@ -60,6 +63,9 @@ MDBaseGenerator >> colors [
 
 { #category : #accessing }
 MDBaseGenerator >> cssInFileLibrary [
+	"This parameter should be a boolean. If it is true, the MDL CSS will be stored in the FileLibrary of the application, else the header will reference an external resource."
+
+	<generatorParameter>
 	^ cssInFileLibrary
 ]
 
@@ -142,6 +148,9 @@ MDBaseGenerator >> openPackage [
 
 { #category : #accessing }
 MDBaseGenerator >> packageName [
+	"This parameters defines the name of the package containing the application generated. For example: `MyApplication-Seaside`."
+
+	<generatorParameter>
 	^ packageName
 ]
 
@@ -152,6 +161,9 @@ MDBaseGenerator >> packageName: anObject [
 
 { #category : #accessing }
 MDBaseGenerator >> prefix [
+	"This parameter defines the prefix of generated classes. For example: `MA`."
+
+	<generatorParameter>
 	^ prefix
 ]
 
@@ -167,6 +179,9 @@ MDBaseGenerator >> prefixed: aString [
 
 { #category : #accessing }
 MDBaseGenerator >> primaryColor [
+	"This color will be used as primary color of the MDL application. It should be an instance of MDLColor. For example: `MDLColor deepPurple`."
+
+	<generatorParameter>
 	^ primaryColor
 ]
 
@@ -177,6 +192,9 @@ MDBaseGenerator >> primaryColor: anObject [
 
 { #category : #accessing }
 MDBaseGenerator >> projectName [
+	"This parameter defines the project name. This name will be used as route of the application in Seaside registration and also for some comments. For example: `MyApplication`."
+
+	<generatorParameter>
 	^ projectName
 ]
 
@@ -194,6 +212,9 @@ MDBaseGenerator >> rootClassGenerator [
 
 { #category : #accessing }
 MDBaseGenerator >> rootHtmlClass [
+	"This parameter defines a css class to add to the root component of the application to help with the CSS. For example: `my-application`."
+
+	<generatorParameter>
 	^ rootHtmlClass
 ]
 
@@ -204,6 +225,9 @@ MDBaseGenerator >> rootHtmlClass: anObject [
 
 { #category : #accessing }
 MDBaseGenerator >> title [
+	"This parameter defines the title to display in the tab of the application. For example: `Title of my application!`."
+
+	<generatorParameter>
 	^ title
 ]
 
@@ -214,21 +238,16 @@ MDBaseGenerator >> title: anObject [
 
 { #category : #preprocessing }
 MDBaseGenerator >> validateInformations [
-	self prefix ifNil: [ self error: 'Generator needs a prefix for the classes to generate. Example: ''MDE'' will generate classes begining with MDE.' ].
-	self packageName ifNil: [ self error: 'Generator needs a package name where to generate the code.' ].
-	self projectName ifNil: [ self error: 'Generator needs a project name.' ].
-	self withFooter ifNil: [ self error: 'Generator needs to know if you want your pages to get a footer or not.' ].
-	self withDrawerHeader ifNil: [ self error: 'Generator needs to know if you want your header with a drawer or not.' ].
-	self rootHtmlClass ifNil: [ self error: 'Generator needs to have a root html class.' ].
-	self title ifNil: [ self error: 'Generator needs to have a title to display in the tab of the browser.' ].
 	self class environment at: #MaterialDesignLite ifAbsent: [ self error: 'MDL need to be in the image for the generation.' ].
-	self primaryColor ifNil: [ self error: 'Generator needs a primary color set for MDL.' ].
-	self accentColor ifNil: [ self error: 'Generator needs a accent color set for MDL.' ].
-	self cssInFileLibrary ifNil: [ self error: 'Generator needs to know if the CSS should be stored in the file library or the referenced in the update root.' ]
+	(Pragma allNamed: #generatorParameter in: self class)
+		do: [ :pragma | (self perform: pragma methodSelector) ifNil: [ self error: ('Missing parameter {1}. {2}' format: {pragma methodSelector . pragma method comment allButFirst allButLast}) ] ]
 ]
 
 { #category : #accessing }
 MDBaseGenerator >> withDrawerHeader [
+	"This parameter should be a boolean and defines if the application will have a menu as tabs or as a drawer."
+
+	<generatorParameter>
 	^ withDrawerHeader
 ]
 
@@ -239,6 +258,9 @@ MDBaseGenerator >> withDrawerHeader: anObject [
 
 { #category : #accessing }
 MDBaseGenerator >> withFooter [
+	"This parameter defines if the application should have a footer or not."
+
+	<generatorParameter>
 	^ withFooter
 ]
 
