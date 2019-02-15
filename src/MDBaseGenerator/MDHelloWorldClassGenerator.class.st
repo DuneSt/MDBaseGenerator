@@ -33,7 +33,7 @@ MDHelloWorldClassGenerator >> initializeMethods [
 		addMethodIn: 'rendering'
 		code:
 			'renderContentOn: html
-	html text: ''Hello world'''
+	html div style: ''min-height: 400px;''; with: ''Hello world'''
 ]
 
 { #category : #accessing }

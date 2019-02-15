@@ -22,13 +22,13 @@ MDBaseGenerator class >> example [
 		prefix: 'MDE';
 		packageName: 'MDExample-WebApplication';
 		projectName: 'MDExample';
-		withFooter: false;
+		withFooter: true;
 		withDrawerHeader: false;
 		rootHtmlClass: 'mdexample';
 		title: 'Application example for MDL.';
 		primaryColor: MDLColor deepPurple;
 		accentColor: MDLColor pink;
-		cssInFileLibrary: false;
+		cssInFileLibrary: true;
 		generate
 ]
 
@@ -44,13 +44,8 @@ MDBaseGenerator >> accentColor: anObject [
 
 { #category : #accessing }
 MDBaseGenerator >> classGenerators [
-	^ {MDComponentClassGenerator.
-	MDFileLibraryClassGenerator.
-	MDSessionClassGenerator.
-	MDPageClassGenerator.
-	MDHelloWorldClassGenerator.
-	self headerClassGenerator.
-	self rootClassGenerator}
+	^ {MDComponentClassGenerator . MDFileLibraryClassGenerator . MDSessionClassGenerator . MDPageClassGenerator . MDHelloWorldClassGenerator . self headerClassGenerator.
+	(self withFooter ifTrue: [ MDFooterClassGenerator ]) . self rootClassGenerator}
 ]
 
 { #category : #preprocessing }

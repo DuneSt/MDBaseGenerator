@@ -69,7 +69,6 @@ MDRootClassGenerator >> initializeClassMethods [
 
 { #category : #initialization }
 MDRootClassGenerator >> initializeMethods [
-	self flag: #todo.	"Add dehault footer method."
 	super initializeMethods.
 	self
 		addMethodIn: 'accessing'

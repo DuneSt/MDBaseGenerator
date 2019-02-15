@@ -35,6 +35,10 @@ MDRootWithFooterClassGenerator >> initializeMethodsRelatedToFooter [
 			code:
 			'footer: aComponent
 	footer := aComponent';
+		addMethodIn: 'components'
+			code:
+			('defaultFooter
+	^ {1} new' format: {MDFooterClassGenerator instance className});
 		addMethodIn: 'hooks'
 			code:
 			'children
