@@ -92,13 +92,9 @@ MDBaseGenerator >> generate [
 		title: 'Generating application: Generate classes'.
 	self classGenerators do: [ :class | (class generator: self) generate ] displayingProgress: [ :class | 'Generation of ' , class printString ].
 	job
-		progress: 0.7;
+		progress: 0.8;
 		title: 'Generating application: Open package'.
 	self openPackage.
-	job
-		progress: 0.8;
-		title: 'Generating application: Open transcript'.
-	self openLastInstructions.
 	job
 		progress: 1;
 		title: 'Generating application: Initialize classes'.
@@ -113,32 +109,6 @@ MDBaseGenerator >> headerClassGenerator [
 { #category : #postprocessing }
 MDBaseGenerator >> initializeClasses [
 	{self rootClassGenerator} do: [ :class | self class environment at: class instance className asSymbol ifPresent: #initialize ]
-]
-
-{ #category : #postprocessing }
-MDBaseGenerator >> openLastInstructions [
-	Transcript
-		clear;
-		open.
-	(String
-		streamContents: [ :s | 
-			(s
-				<<
-				'Application generated with success.
-Now you can implement the missing parts to get your application!
-	1) ')
-				<< self rootClassGenerator instance className;
-				<<
-					'>>style should be updated to match your application color selection (See MDL for Seaside getting started section) or better, should be removed after you move the code to your own CSS.
-	2) ';
-				<< self rootClassGenerator instance className;
-				<<
-					'>>updateRoot: should be updated to match your application color selection (See MDL for Seaside getting started section) or better, the color part should be removed after you move the code to your own file library.
-	3) Replace  ';
-				<< MDHelloWorldClassGenerator instance className;
-				<<
-					' by your first page.
-	4)' ]) logCr
 ]
 
 { #category : #postprocessing }
