@@ -127,7 +127,13 @@ MDRootClassGenerator >> initializeMethods [
 			code:
 			'style
 	^ ''.mdl-pagination__current{
-        box-shadow: inset 0px -4px 0px 0px #E91E63 !important;
+        box-shadow: inset 0px -4px 0px 0px '
+				,
+					(self generator accentColor
+						code: #A200;
+						yourself) asRGBA
+				,
+					' !important;
     }''';
 		addMethodIn: 'updating'
 			code:
@@ -146,7 +152,7 @@ MDRootClassGenerator >> initializeMethods [
 					{self generator title . (self generator cssInFileLibrary
 						ifTrue: [ '' ]
 						ifFalse: [ '.
-	anHtmlRoot stylesheet url: (WAUrl absolute: ''https://storage.googleapis.com/code.getmdl.io/1.3.0/material.', self generator colors , '.min.css'')' ])});
+	anHtmlRoot stylesheet url: (WAUrl absolute: ''https://storage.googleapis.com/code.getmdl.io/1.3.0/material.' , self generator colors , '.min.css'')' ])});
 		addMethodIn: 'updating'
 			code:
 			'updateUrl: aUrl
