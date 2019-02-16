@@ -45,4 +45,24 @@ MDBaseGenerator new
 
 ## Description of the generator application
 
-TODO
+### Session
+
+The generated application will have a custom session. This session will be used to store the root component. Like this, all the components of the application will be able to access the root component. This is useful to implement some navigation because like that each component can ask to the root to change the current browser to display.
+
+### Root component
+
+The root component of the generated application will display a header and optionaly a footer. It will also display a main component. When we change of main component, the previous instances are kept. Like that it is possible to come back to a previous browser and to keep the state. 
+
+To display a browser you can execute in all components
+
+```Smalltalk
+self displayInstanceOf: aClass
+```
+
+To no get back the previous instance you can do:
+
+```Smalltalk
+self display: aClass new
+```
+
+The main component should be a subclass of the {Prefix}Page class. The name of the page will be added to the URL and the link will be sharable. If we get the URL with the page name, the right page will be displayed.
