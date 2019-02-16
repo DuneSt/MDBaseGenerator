@@ -108,7 +108,7 @@ MDBaseGenerator >> headerClassGenerator [
 
 { #category : #postprocessing }
 MDBaseGenerator >> initializeClasses [
-	{self rootClassGenerator} do: [ :class | self class environment at: class instance className asSymbol ifPresent: #initialize ]
+	(RPackageOrganizer default packageNamed: self packageName) classes do: #initialize
 ]
 
 { #category : #postprocessing }
