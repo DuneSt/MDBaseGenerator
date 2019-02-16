@@ -123,18 +123,6 @@ MDRootClassGenerator >> initializeMethods [
 
 			"If we find a page, we pop the subpart of the path corresponding to the page."
 			consumer next ]';
-		addMethodIn: 'hooks'
-			code:
-			'style
-	^ ''.mdl-pagination__current{
-        box-shadow: inset 0px -4px 0px 0px '
-				,
-					(self generator accentColor
-						code: #A200;
-						yourself) asRGBA
-				,
-					' !important;
-    }''';
 		addMethodIn: 'updating'
 			code:
 			'displayInstanceOf: aComponentClass

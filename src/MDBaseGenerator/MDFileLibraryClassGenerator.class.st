@@ -15,17 +15,36 @@ MDFileLibraryClassGenerator >> initializeMethods [
 
 	| library url fileName |
 	super initializeMethods.
+	self
+		addMethodIn: 'css'
+		code:
+			'projectCss
+	^ ''.mdl-pagination__current{
+        box-shadow: inset 0px -4px 0px 0px '
+				,
+					(self generator accentColor
+						code: #A200;
+						yourself) asRGBA
+				,
+					' !important;
+    }'''.
+
+	self
+		addMethodIn: 'accessing'
+		code:
+			'selectorsToInclude
+	^ #( #projectCss )'.
+
 	self generator cssInFileLibrary ifFalse: [ ^ self ].
 	library := self class environment at: self className asSymbol.
 	fileName := 'material.' , self generator colors , '.min.css'.
-	url := 'https://storage.googleapis.com/code.getmdl.io/1.3.0/'
-		, fileName.
+	url := 'https://storage.googleapis.com/code.getmdl.io/1.3.0/' , fileName.
 	library addFileNamed: fileName contents: (ZnEasy get: url) contents.
 	self
 		addMethodIn: 'accessing'
 		code:
 			('selectorsToInclude
-	^ #({1})' format: {(library asSelector: fileName)})
+	^ #(#projectCss #{1})' format: {(library asSelector: fileName)})
 ]
 
 { #category : #accessing }
