@@ -47,8 +47,18 @@ MDBaseGenerator >> accentColor: anObject [
 
 { #category : #accessing }
 MDBaseGenerator >> classGenerators [
-	^ {MDComponentClassGenerator . MDFileLibraryClassGenerator . MDSessionClassGenerator . MDPageClassGenerator . MDHelloWorldClassGenerator . self headerClassGenerator.
-	(self withFooter ifTrue: [ MDFooterClassGenerator ]) . self rootClassGenerator}
+	| classes |
+	classes := OrderedCollection new.
+	classes
+		add: MDComponentClassGenerator;
+		add: MDFileLibraryClassGenerator;
+		add: MDSessionClassGenerator;
+		add: MDPageClassGenerator;
+		add: MDHelloWorldClassGenerator;
+		add: self headerClassGenerator.
+	self withFooter ifTrue: [ classes add: MDFooterClassGenerator ].
+	classes add: self rootClassGenerator.
+	^ classes
 ]
 
 { #category : #preprocessing }
