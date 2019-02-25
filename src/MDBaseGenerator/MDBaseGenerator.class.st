@@ -22,7 +22,7 @@ MDBaseGenerator class >> example [
 		prefix: 'MDE';
 		packageName: 'MDExample-WebApplication';
 		projectName: 'MDExample';
-		withFooter: true;
+		withFooter: 'relative'; "can be nil, 'fixe', 'relative'"
 		withDrawerHeader: false;
 		rootHtmlClass: 'mdexample';
 		title: 'Application example for MDL.';
@@ -56,7 +56,7 @@ MDBaseGenerator >> classGenerators [
 		add: MDPageClassGenerator;
 		add: MDHelloWorldClassGenerator;
 		add: self headerClassGenerator.
-	self withFooter ifTrue: [ classes add: MDFooterClassGenerator ].
+	self withFooter ifNotNil: [ classes add: MDFooterClassGenerator ].
 	classes add: self rootClassGenerator.
 	^ classes
 ]
@@ -186,8 +186,8 @@ MDBaseGenerator >> projectName: anObject [
 { #category : #accessing }
 MDBaseGenerator >> rootClassGenerator [
 	^ self withFooter
-		ifTrue: [ MDRootWithFooterClassGenerator ]
-		ifFalse: [ MDRootClassGenerator ]
+		ifNotNil: [ MDRootWithFooterClassGenerator ]
+		ifNil: [ MDRootClassGenerator ]
 ]
 
 { #category : #accessing }

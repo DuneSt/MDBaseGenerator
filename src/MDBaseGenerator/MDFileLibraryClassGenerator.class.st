@@ -27,18 +27,24 @@ MDFileLibraryClassGenerator >> initializeMethods [
 						yourself) asRGBA
 				,
 					' !important;
-    }'''.
-
+    }' , (self generator withFooter == 'relative'
+		ifTrue: [ 
+			'
+	main.mdl-layout__content {
+   		overflow: initial;
+	}''' ]
+		ifFalse: [ '''' ]).
 	self
 		addMethodIn: 'accessing'
 		code:
 			'selectorsToInclude
 	^ #( #projectCss )'.
-
-	self generator cssInFileLibrary ifFalse: [ ^ self ].
+	self generator cssInFileLibrary
+		ifFalse: [ ^ self ].
 	library := self class environment at: self className asSymbol.
 	fileName := 'material.' , self generator colors , '.min.css'.
-	url := 'https://storage.googleapis.com/code.getmdl.io/1.3.0/' , fileName.
+	url := 'https://storage.googleapis.com/code.getmdl.io/1.3.0/'
+		, fileName.
 	library addFileNamed: fileName contents: (ZnEasy get: url) contents.
 	self
 		addMethodIn: 'accessing'
