@@ -9,6 +9,20 @@ MDFileLibraryClassGenerator >> comment [
 	^ 'TODO'
 ]
 
+{ #category : #css }
+MDFileLibraryClassGenerator >> generateCss [
+	^ (String
+		streamContents: [ :s | 
+			s
+				<<
+					'projectCss
+	^ '''.
+			self writeMDColor: s.
+			self writeHeaderPosition: s.
+			self writeFooterPosition: s.
+			s << '''' ]) contents
+]
+
 { #category : #initialization }
 MDFileLibraryClassGenerator >> initializeMethods [
 	"Nothing by default"
@@ -17,23 +31,7 @@ MDFileLibraryClassGenerator >> initializeMethods [
 	super initializeMethods.
 	self
 		addMethodIn: 'css'
-		code:
-			'projectCss
-	^ ''.mdl-pagination__current{
-        box-shadow: inset 0px -4px 0px 0px '
-				,
-					(self generator accentColor
-						code: #A200;
-						yourself) asRGBA
-				,
-					' !important;
-    }' , (self generator withFooter == 'relative'
-		ifTrue: [ 
-			'
-	main.mdl-layout__content {
-   		overflow: initial;
-	}''' ]
-		ifFalse: [ '''' ]).
+		code: self generateCss.
 	self
 		addMethodIn: 'accessing'
 		code:
@@ -66,4 +64,48 @@ MDFileLibraryClassGenerator >> packageTag [
 { #category : #accessing }
 MDFileLibraryClassGenerator >> superclassName [
 	^ #WAFileLibrary
+]
+
+{ #category : #css }
+MDFileLibraryClassGenerator >> writeFooterPosition: s [
+	self generator withFooter = 'relative'
+		ifTrue: [ s
+				<<
+					'
+							
+	main.mdl-layout__content {
+   		overflow: initial;
+	}' ]
+]
+
+{ #category : #css }
+MDFileLibraryClassGenerator >> writeHeaderPosition: s [
+	s
+		<<
+			'
+							
+	header {
+   		position: ';
+		<<
+			(self generator withHeader = 'relative'
+				ifTrue: [ 'relative' ]
+				ifFalse: [ 'fixed' ]);
+		<<
+			';
+	}'
+]
+
+{ #category : #css }
+MDFileLibraryClassGenerator >> writeMDColor: s [
+	s
+		<<
+			'.mdl-pagination__current{
+        box-shadow: inset 0px -4px 0px 0px ';
+		<<
+			(self generator accentColor
+				code: #A200;
+				yourself) asRGBA;
+		<<
+			' !important;
+    }'
 ]

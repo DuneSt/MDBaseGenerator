@@ -11,7 +11,8 @@ Class {
 		'title',
 		'primaryColor',
 		'accentColor',
-		'cssInFileLibrary'
+		'cssInFileLibrary',
+		'withHeader'
 	],
 	#category : #MDBaseGenerator
 }
@@ -23,7 +24,8 @@ MDBaseGenerator class >> example [
 		packageName: 'MDExample-WebApplication';
 		projectName: 'MDExample';
 		withFooter: 'relative'; "can be nil, 'fixe', 'relative'"
-		withDrawerHeader: false;
+		withHeader: 'relative'; "'fixe' by default, can be 'fixe', 'relative'"
+		withDrawerHeader: true;
 		rootHtmlClass: 'mdexample';
 		title: 'Application example for MDL.';
 		primaryColor: MDLColor deepPurple;
@@ -247,4 +249,14 @@ MDBaseGenerator >> withFooter [
 { #category : #accessing }
 MDBaseGenerator >> withFooter: anObject [
 	withFooter := anObject
+]
+
+{ #category : #accessing }
+MDBaseGenerator >> withHeader [
+	^ withHeader ifNil: 'fixe'
+]
+
+{ #category : #accessing }
+MDBaseGenerator >> withHeader: anObject [
+	withHeader := anObject
 ]
