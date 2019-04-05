@@ -25,5 +25,5 @@ MDTabBarHeaderClassGenerator >> initializeMethodsRelatedToHeaderKind [
 							html mdlLayoutTab
 								callback: [ self displayInstanceOf: aClass ];
 								isActiveIf: aClass = self rootComponent componentToDisplay class;
-								with: aClass pageName ] ] ]' format: {self generator title})
+								with: aClass pageName ] ] ]' format: {self generator title copyReplaceAll: '''' with: ''''''})
 ]

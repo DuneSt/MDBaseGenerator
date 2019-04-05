@@ -20,7 +20,7 @@ MDDrawerHeaderClassGenerator >> initializeMethodsRelatedToHeaderKind [
 								mdlLayoutTitle: ''{1}'' ].
 					html mdlLayoutSpacer.
 					html text: ''Version 0.0.0''. ] ].
-	self renderDrawerOn: html' format: {self generator title});
+	self renderDrawerOn: html' format: {self generator title copyReplaceAll: '''' with: ''''''});
 		addMethodIn: 'rendering'
 			code:
 			'renderDrawerOn: html

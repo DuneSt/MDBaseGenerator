@@ -45,7 +45,7 @@ MDRootClassGenerator >> initializeClassMethods [
 			code:
 			('menuCommandOn: aBuilder
 	<worldMenu>
-	(aBuilder item: #{1})
+	(aBuilder item: #''{1}'')
 		order: 20;
 		with: [ (aBuilder item: #''Open in default browser'')
 				order: 2;
@@ -137,7 +137,7 @@ MDRootClassGenerator >> initializeMethods [
 		attributeAt: ''name'' put: ''viewport'';
 		content: ''width=device-width, initial-scale=1''{2}'
 				format:
-					{self generator title . (self generator cssInFileLibrary
+					{(self generator title copyReplaceAll: '''' with: '''''') . (self generator cssInFileLibrary
 						ifTrue: [ '' ]
 						ifFalse: [ '.
 	anHtmlRoot stylesheet url: (WAUrl absolute: ''https://storage.googleapis.com/code.getmdl.io/1.3.0/material.' , self generator colors , '.min.css'')' ])});
