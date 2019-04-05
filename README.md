@@ -1,6 +1,6 @@
 # MDBaseGenerator
 
-This project allows to generate the base of a Seaside application using [Material Design Lite for Seaside](https://github.com/DuneSt/MaterialDesignLite) as I like to build them.
+This project allows you to generate the base of a Seaside application using [Material Design Lite for Seaside](https://github.com/DuneSt/MaterialDesignLite) as I like to build them.
 
 ## Install
 
