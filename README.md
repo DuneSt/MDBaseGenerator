@@ -6,7 +6,7 @@ This project allows you to generate the base of a Seaside application using [Mat
 
 ```Smalltalk
     Metacello new
-    	githubUser: 'jecisc' project: 'MDBaseGenerator' commitish: 'master' path: 'src';
+    	githubUser: 'DuneSt' project: 'MDBaseGenerator' commitish: 'master' path: 'src';
     	baseline: 'MDBaseGenerator';
     	load
 ```
