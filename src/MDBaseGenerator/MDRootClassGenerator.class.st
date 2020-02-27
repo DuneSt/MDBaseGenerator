@@ -176,7 +176,7 @@ MDRootClassGenerator >> initializeMethodsRelatedToFooter [
 						with: [ html mdlCell
 								class: ''{1}'';
 								size: 12;
-								with: [ html render: self componentToDisplay ] ]] ]' format: {self generator rootHtmlClass})
+								with: [ html render: self componentToDisplay ] ] ] ]' format: {self generator rootHtmlClass})
 ]
 
 { #category : #accessing }
